@@ -1,29 +1,28 @@
 class Page {
-  constructor({ page = 1, cbPrev = () => { }, cbNext = () => { }, cbJump = () => { },cbSpot=()=>{} }) {
-    this.cbJump=cbJump;
-    this.cbNext=cbNext;
-    this.cbPrev=cbPrev;
-    this.cbSpot=cbSpot;
-    // const {page,cbPrev,cbNext,cbJump}=props;
+  constructor({ page = 1, cbPrev = () => { }, cbNext = () => { }, cbJump = () => { }, cbSpot = () => { } }) {
+    this.cbJump = cbJump;
+    this.cbNext = cbNext;
+    this.cbPrev = cbPrev;
+    this.cbSpot = cbSpot;
     this.page = page || 1;
     this.pageTwo = 2;
     this.pageThree = 3;
     this.nextPage = this.nextPage.bind(this);
     this.prevPage = this.prevPage.bind(this);
-    this.jumpPage=this.jumpPage.bind(this);
-    this.spotPage=this.spotPage.bind(this);
-    this.maxPage=10;
+    this.jumpPage = this.jumpPage.bind(this);
+    this.spotPage = this.spotPage.bind(this);
+    this.maxPage = 10;
     this.init();
   }
   init() {
     this.initItem();
-    const self=this;
+    const self = this;
     document.querySelector('#wkr_next').addEventListener('click', this.nextPage);
     document.querySelector('#wkr_prev').addEventListener('click', this.prevPage);
-    document.querySelector('#wkr_jump').addEventListener('click',this.jumpPage);
-    document.querySelectorAll('.wkr_item').forEach((item,index)=>{
-      item.addEventListener('click',function(e){
-        
+    document.querySelector('#wkr_jump').addEventListener('click', this.jumpPage);
+    document.querySelectorAll('.wkr_item').forEach((item, index) => {
+      item.addEventListener('click', function () {
+
         self.spotPage(this.innerText);
 
       })
@@ -36,11 +35,11 @@ class Page {
       alert('注意！！！已经是第一页了！！！')
       return;
     } else if (this.page > 3) {
-      this.pageTwo=this.page-1;
-      this.pageThree=this.page;
-    }else if(this.page<=3){
-      this.pageTwo=2;
-      this.pageThree=3;
+      this.pageTwo = this.page - 1;
+      this.pageThree = this.page;
+    } else if (this.page <= 3) {
+      this.pageTwo = 2;
+      this.pageThree = 3;
     }
     this.cbPrev();
     this.initItem();
@@ -51,41 +50,41 @@ class Page {
       this.page--;
       alert('注意！！！已经是最后一页了！！！')
       return;
-    } else{
+    } else {
       if (this.page >= 3 && this.page <= this.maxPage) {
-        this.pageThree=this.page;
-        this.pageTwo=this.page-1;
+        this.pageThree = this.page;
+        this.pageTwo = this.page - 1;
       }
       this.cbNext();
       this.initItem();
-    } 
+    }
   }
   jumpPage() {
-    const newPage=document.querySelector('#wkr_page').value;
-    if(newPage<1){
+    const newPage = document.querySelector('#wkr_page').value;
+    if (newPage < 1) {
       alert('请输如有效页码数！');
-      return ;
+      return;
     }
-    if(newPage<=3){
-      this.pageTwo=2;
+    if (newPage <= 3) {
+      this.pageTwo = 2;
       this.pageThree3;
-    }else if(newPage<this.maxPage&&newPage>3){
-      this.pageTwo=newPage-1;
-      this.pageThree=newPage;
-    }else{
+    } else if (newPage < this.maxPage && newPage > 3) {
+      this.pageTwo = newPage - 1;
+      this.pageThree = newPage;
+    } else {
       alert('sorry！页面已经超出查询范围，请重新输入！');
-      return ;
+      return;
     }
-    this.page=newPage;
+    this.page = newPage;
     this.cbJump();
     this.initItem();
   }
-  spotPage(v){
-    if(Number(v)===1){
-      this.pageTwo=2;
-      this.pageThree=3;
+  spotPage(v) {
+    if (Number(v) === 1) {
+      this.pageTwo = 2;
+      this.pageThree = 3;
     }
-    this.page=v;
+    this.page = v;
     this.cbSpot();
     this.initItem();
   }
